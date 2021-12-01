@@ -3,4 +3,8 @@ Rails.application.routes.draw do
     registrations: 'auth/registrations'
   }
 
+  scope :api, { format: 'json' } do
+    resources :posts
+  end
+
 end
