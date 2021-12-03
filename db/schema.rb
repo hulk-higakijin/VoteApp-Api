@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2021_11_30_133250) do
     t.integer "agree_count"
     t.integer "disagree_count"
     t.integer "user_id"
+    t.boolean "is_published"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_posts_on_user_id"

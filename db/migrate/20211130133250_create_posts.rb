@@ -6,6 +6,8 @@ class CreatePosts < ActiveRecord::Migration[6.1]
       t.integer :disagree_count
       t.references :user
 
+      t.boolean :is_published
+
       t.timestamps
     end
   end
