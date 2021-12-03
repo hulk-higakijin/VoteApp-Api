@@ -16,6 +16,7 @@ class PostsController < ApplicationController
 
   # end
 
+  #  ここを追加
   def create
     post = Post.create(topic: params[:post][:topic], user_id: current_user.id, is_published: params[:post][:published])
   end
