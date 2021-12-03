@@ -6,9 +6,23 @@ class PostsController < ApplicationController
   end
 
   def index
-    posts = { id:1, topic: "憲法改正するべき？", agree_count: 22, disagree_count: 17, agree_rate: 56.41 }
-    posts = Post.all
-    render json: posts
+    # posts = { id:1, topic: "憲法改正するべき？", agree_count: 22, disagree_count: 17, agree_rate: 56.41 }
+    posts = Post.all.includes(:user)
+    posts_array = posts.map do |p|
+      {
+        id: p.id,
+        user_id: p.user.id,
+        email: p.user.email,
+        name: p.user.name,
+        topic: p.topic,
+        agree_count: p.agree_count,
+        disagree_count: p.disagree_count,
+        is_published: p.is_published,
+        created_at: p.created_at,
+        updated_at: p.updated_at,
+      }
+    end
+    render json: posts_array, status: 200
   end
 
   # def show
