@@ -12,7 +12,7 @@ class PostsController < ApplicationController
       {
         id: p.id,
         user_id: p.user.id,
-        email: p.user.email,
+        # email: p.user.email,
         name: p.user.name,
         topic: p.topic,
         agree_count: p.agree_count,
@@ -25,13 +25,27 @@ class PostsController < ApplicationController
     render json: posts_array, status: 200
   end
 
-  # def show
-  #   post = Post.find(paramd[:id])
-
-  # end
+  def show
+    p = Post.find(params[:id])
+    post_array = {
+      id: p.id,
+      user_id: p.user_id,
+      name: p.user.name,
+      topic: p.topic,
+      agree_count: p.agree_count,
+      disagree_count: p.disagree_count,
+      is_published: p.is_published,
+      created_at: p.created_at,
+      updated_at: p.updated_at
+    }
+    render json: post_array, status: 200
+  end
 
   #  ここを追加
   def create
-    post = Post.create(topic: params[:post][:topic], user_id: current_user.id, is_published: params[:post][:published])
+    post = Post.create(topic: params[:post][:topic],
+                        user_id: current_user.id,
+                        is_published: params[:post][:published]
+                      )
   end
 end
