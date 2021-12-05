@@ -1,4 +1,6 @@
 class VotesController < ApplicationController
+  before_action :authenticate_user!, only: [:create]
+  
   def create
     post = Post.find(params[:post][:id])
     votes = post.votes
