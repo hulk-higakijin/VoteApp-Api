@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   }
 
   scope :api, { format: 'json' } do
-    resources :posts
+    resources :posts do 
+      resource :votes, only: [:create]
+    end
   end
 
 end
