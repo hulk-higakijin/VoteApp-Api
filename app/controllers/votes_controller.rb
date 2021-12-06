@@ -9,5 +9,6 @@ class VotesController < ApplicationController
     post.update(agree_count: post.votes.where(is_agree: true).length,
                 disagree_count: post.votes.where(is_agree: false).length
               )
+    render json: vote, status: 200
   end
 end

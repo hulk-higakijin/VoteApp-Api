@@ -38,7 +38,7 @@ class PostsController < ApplicationController
       created_at: p.created_at,
       votes: p.votes.map do |v| {
           id: v.id,
-          user_id: v.user.id,
+          uid: v.user.email,
           is_agree: v.is_agree
         }
       end
