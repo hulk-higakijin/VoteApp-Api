@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   def index
     # posts = { id:1, topic: "憲法改正するべき？", agree_count: 22, disagree_count: 17, agree_rate: 56.41 }
-    posts = Post.all.includes(:user)
+    posts = Post.all.eager_load(:user, :votes)
     posts_array = posts.map do |p|
       {
         id: p.id,
@@ -13,14 +13,20 @@ class PostsController < ApplicationController
         agree_count: p.agree_count,
         disagree_count: p.disagree_count,
         is_published: p.is_published,
-        created_at: p.created_at
+        created_at: p.created_at,
+        votes: p.votes.map do |v| {
+          id: v.id,
+          uid: v.user.email,
+          is_agree: v.is_agree
+        }
+        end
       }
     end
     render json: posts_array, status: 200
   end
 
   def show
-    p = Post.find(params[:id])
+    p = Post.eager_load(:user, :votes).find(params[:id])
     post_array = {
       id: p.id,
       user_id: p.user_id,
@@ -29,7 +35,13 @@ class PostsController < ApplicationController
       agree_count: p.agree_count,
       disagree_count: p.disagree_count,
       is_published: p.is_published,
-      created_at: p.created_at
+      created_at: p.created_at,
+      votes: p.votes.map do |v| {
+          id: v.id,
+          uid: v.user.email,
+          is_agree: v.is_agree
+        }
+      end
     }
     render json: post_array, status: 200
   end
