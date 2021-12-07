@@ -13,10 +13,11 @@
 ActiveRecord::Schema.define(version: 2021_11_30_133250) do
 
   create_table "posts", force: :cascade do |t|
-    t.string "topic"
-    t.integer "agree_count"
-    t.integer "disagree_count"
+    t.string "topic", null: false
+    t.integer "agree_count", default: 0
+    t.integer "disagree_count", default: 0
     t.integer "user_id"
+    t.boolean "is_published", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
@@ -26,9 +27,9 @@ ActiveRecord::Schema.define(version: 2021_11_30_133250) do
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.string "name"
+    t.string "name", null: false
     t.string "image"
-    t.string "email"
+    t.string "email", null: false
     t.text "introduction"
     t.text "tokens"
     t.datetime "created_at", precision: 6, null: false
