@@ -8,14 +8,12 @@ class PostsController < ApplicationController
       {
         id: p.id,
         user_id: p.user.id,
-        # email: p.user.email,
         name: p.user.name,
         topic: p.topic,
         agree_count: p.agree_count,
         disagree_count: p.disagree_count,
         is_published: p.is_published,
-        created_at: p.created_at,
-        updated_at: p.updated_at,
+        created_at: p.created_at
       }
     end
     render json: posts_array, status: 200
@@ -31,8 +29,7 @@ class PostsController < ApplicationController
       agree_count: p.agree_count,
       disagree_count: p.disagree_count,
       is_published: p.is_published,
-      created_at: p.created_at,
-      updated_at: p.updated_at
+      created_at: p.created_at
     }
     render json: post_array, status: 200
   end
