@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_05_074126) do
+ActiveRecord::Schema.define(version: 2021_12_08_093220) do
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "post_id", null: false
+    t.text "body", null: false
+    t.integer "like_count", default: 0
+    t.boolean "is_agree", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "posts", force: :cascade do |t|
     t.string "topic", null: false
@@ -48,6 +60,8 @@ ActiveRecord::Schema.define(version: 2021_12_05_074126) do
     t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
+  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users"
   add_foreign_key "votes", "posts"
   add_foreign_key "votes", "users"
 end
