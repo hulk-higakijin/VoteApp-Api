@@ -8,6 +8,7 @@ class PostsController < ApplicationController
       {
         id: p.id,
         user_id: p.user.id,
+        uid: p.user.email,
         name: p.user.name,
         topic: p.topic,
         agree_count: p.agree_count,
