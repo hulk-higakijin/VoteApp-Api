@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [:create]
+  before_action :authenticate_user!, only: [:create, :unpublished]
 
   def index
     # posts = { id:1, topic: "憲法改正するべき？", agree_count: 22, disagree_count: 17, agree_rate: 56.41 }
@@ -8,6 +8,7 @@ class PostsController < ApplicationController
       {
         id: p.id,
         user_id: p.user.id,
+        uid: p.user.email,
         name: p.user.name,
         topic: p.topic,
         agree_count: p.agree_count,
@@ -60,4 +61,10 @@ class PostsController < ApplicationController
                         is_published: params[:post][:published]
                       )
   end
+
+  def unpublished
+    post = Post.find(params[:post][:id])
+    post.update(is_published: true) if !post.is_published
+  end
+  
 end

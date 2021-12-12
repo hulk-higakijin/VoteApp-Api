@@ -6,9 +6,10 @@ Rails.application.routes.draw do
 
   scope :api, { format: 'json' } do
     resources :posts do 
-      resource :votes, only: [:create]
+      resource :votes, only: [:create] 
       resource :comments, only: [:create]
     end
+    post 'posts/unpublished' => 'posts#unpublished'
   end
 
 end
