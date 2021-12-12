@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   scope :api, { format: 'json' } do
     resources :posts do 
       resource :votes, only: [:create]
+      resource :comments, only: [:create]
     end
   end
 

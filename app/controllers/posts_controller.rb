@@ -26,7 +26,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    p = Post.eager_load(:user, :votes).find(params[:id])
+    p = Post.eager_load(:user, :votes, :comments).find(params[:id])
     post_array = {
       id: p.id,
       user_id: p.user_id,
@@ -40,6 +40,14 @@ class PostsController < ApplicationController
           id: v.id,
           uid: v.user.email,
           is_agree: v.is_agree
+        }
+      end,
+      comments: p.comments.map do |c| {
+          id: c.id,
+          name: c.user.name,
+          is_agree: c.is_agree,
+          body: c.body,
+          like_count: c.like_count,
         }
       end
     }
