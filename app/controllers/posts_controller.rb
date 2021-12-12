@@ -66,5 +66,9 @@ class PostsController < ApplicationController
     post = Post.find(params[:post][:id])
     post.update(is_published: true) if !post.is_published
   end
-  
+
+  def destroy
+    post = Post.find(params[:post][:id])
+    post.destroy
+  end
 end
