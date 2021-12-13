@@ -55,7 +55,7 @@ class PostsController < ApplicationController
           name: c.user.name,
           is_agree: c.is_agree,
           body: c.body,
-          like_count: c.like_count,
+          likes_count: c.likes_count,
         }
       end,
       likes: p.post_likes.map do |l| {
