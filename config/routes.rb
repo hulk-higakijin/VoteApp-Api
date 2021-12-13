@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :posts do 
       resource :votes, only: [:create] 
       resource :comments, only: [:create]
+      resource :post_likes, only: [:create, :destroy]
     end
     post 'posts/unpublished' => 'posts#unpublished'
   end
