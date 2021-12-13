@@ -4,6 +4,7 @@ class CreatePosts < ActiveRecord::Migration[6.1]
       t.string :topic, null: false
       t.integer :agree_count, default: 0
       t.integer :disagree_count, default: 0
+      t.integer :likes_count, default: 0
       t.references :user
 
       t.boolean :is_published, default: false

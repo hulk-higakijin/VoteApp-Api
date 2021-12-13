@@ -12,6 +12,7 @@ class PostsController < ApplicationController
         topic: p.topic,
         agree_count: p.agree_count,
         disagree_count: p.disagree_count,
+        likes_count: p.likes_count,
         is_published: p.is_published,
         created_at: p.created_at,
         votes: p.votes.map do |v| {
@@ -19,6 +20,11 @@ class PostsController < ApplicationController
           uid: v.user.email,
           is_agree: v.is_agree
         }
+        end,
+        likes: p.post_likes.map do |l| {
+          id: l.id,
+          uid: l.user.email
+        } 
         end
       }
     end
@@ -35,6 +41,7 @@ class PostsController < ApplicationController
       topic: p.topic,
       agree_count: p.agree_count,
       disagree_count: p.disagree_count,
+      likes_count: p.likes_count,
       is_published: p.is_published,
       created_at: p.created_at,
       votes: p.votes.map do |v| {
@@ -49,6 +56,11 @@ class PostsController < ApplicationController
           is_agree: c.is_agree,
           body: c.body,
           like_count: c.like_count,
+        }
+      end,
+      likes: p.post_likes.map do |l| {
+          id: l.id,
+          uid: l.user.email
         }
       end
     }

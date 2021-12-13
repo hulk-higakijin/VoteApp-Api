@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2021_12_12_235815) do
     t.integer "user_id", null: false
     t.integer "post_id", null: false
     t.text "body", null: false
-    t.integer "like_count", default: 0
+    t.integer "likes_count", default: 0
     t.boolean "is_agree", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2021_12_12_235815) do
     t.string "topic", null: false
     t.integer "agree_count", default: 0
     t.integer "disagree_count", default: 0
+    t.integer "likes_count", default: 0
     t.integer "user_id"
     t.boolean "is_published", default: false
     t.datetime "created_at", precision: 6, null: false
