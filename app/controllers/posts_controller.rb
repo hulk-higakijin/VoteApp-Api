@@ -1,8 +1,7 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :unpublished]
+  before_action :authenticate_user!, only: [:create, :unpublished, :destroy]
 
   def index
-    # posts = { id:1, topic: "憲法改正するべき？", agree_count: 22, disagree_count: 17, agree_rate: 56.41 }
     posts = Post.all.eager_load(:user, :votes)
     posts_array = posts.map do |p|
       {
@@ -31,6 +30,7 @@ class PostsController < ApplicationController
     post_array = {
       id: p.id,
       user_id: p.user_id,
+      uid: p.user.email,
       name: p.user.name,
       topic: p.topic,
       agree_count: p.agree_count,
@@ -66,5 +66,9 @@ class PostsController < ApplicationController
     post = Post.find(params[:post][:id])
     post.update(is_published: true) if !post.is_published
   end
-  
+
+  def destroy
+    post = Post.find(params[:post][:id])
+    post.destroy
+  end
 end
