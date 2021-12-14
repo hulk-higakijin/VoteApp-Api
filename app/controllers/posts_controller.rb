@@ -56,6 +56,11 @@ class PostsController < ApplicationController
           is_agree: c.is_agree,
           body: c.body,
           likes_count: c.likes_count,
+          likes: c.comment_likes.map do |l| {
+              id: l.id,
+              uid: l.user.email
+            }
+          end
         }
       end,
       likes: p.post_likes.map do |l| {
