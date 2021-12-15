@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :unpublished, :destroy]
+  before_action :authenticate_user!, only: [:create, :unpublished, :destroy, :checkCurrentUser]
 
   def index
     posts = Post.all.eager_load(:user, :votes)
@@ -52,6 +52,7 @@ class PostsController < ApplicationController
       end,
       comments: p.comments.map do |c| {
           id: c.id,
+          user_id: c.user.id,
           name: c.user.name,
           is_agree: c.is_agree,
           body: c.body,
@@ -87,5 +88,16 @@ class PostsController < ApplicationController
   def destroy
     post = Post.find(params[:post][:id])
     post.destroy
+  end
+
+  def checkCurrentUser
+    u = current_user
+    user_array = {
+      id: u.id,
+      uid: u.email,
+      name: u.name,
+      introduction: u.introduction
+    }
+    render json: user_array, status: 200
   end
 end
