@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!, only: [:checkCurrentUser]
+  
   def show
     u = User.eager_load(:posts).find(params[:id])
     user_array = {
@@ -28,6 +30,17 @@ class UsersController < ApplicationController
         }
       end
 
+    }
+    render json: user_array, status: 200
+  end
+
+  def checkCurrentUser
+    u = current_user
+    user_array = {
+      id: u.id,
+      uid: u.email,
+      name: u.name,
+      introduction: u.introduction
     }
     render json: user_array, status: 200
   end

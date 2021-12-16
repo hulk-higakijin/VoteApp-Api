@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     end
     resources :users, only: [:show]
     post 'posts/unpublished' => 'posts#unpublished'
-    post 'check_current_user' => 'posts#checkCurrentUser'
+    post 'check_current_user' => 'users#checkCurrentUser'
   end
 
 end

@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :unpublished, :destroy, :checkCurrentUser]
+  before_action :authenticate_user!, only: [:create, :unpublished, :destroy]
 
   def index
     posts = Post.all.eager_load(:user, :votes)
@@ -90,15 +90,5 @@ class PostsController < ApplicationController
     post.destroy
   end
 
-  # いらないかも
-  def checkCurrentUser
-    u = current_user
-    user_array = {
-      id: u.id,
-      uid: u.email,
-      name: u.name,
-      introduction: u.introduction
-    }
-    render json: user_array, status: 200
-  end
+  
 end
