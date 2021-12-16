@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:checkCurrentUser]
+  before_action :authenticate_user!, only: [:update, :checkCurrentUser]
   
   def show
     u = User.eager_load(:posts).find(params[:id])
@@ -7,6 +7,7 @@ class UsersController < ApplicationController
       id: u.id,
       name: u.name,
       uid: u.email,
+      created_at: u.created_at,
       introduction: u.introduction,
       posts: u.posts.map do |p| {
           id: p.id,
@@ -34,13 +35,21 @@ class UsersController < ApplicationController
     render json: user_array, status: 200
   end
 
+  def update
+    user = User.find(params[:user][:id])
+    name = params[:user][:name]
+    email = params[:user][:email]
+    introduction = params[:user][:introduction]
+
+    user.update(name: name, email: email, introduction: introduction)
+  end
+
   def checkCurrentUser
     u = current_user
     user_array = {
       id: u.id,
       uid: u.email,
-      name: u.name,
-      introduction: u.introduction
+      name: u.name
     }
     render json: user_array, status: 200
   end
