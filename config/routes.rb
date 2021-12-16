@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resource :post_likes, only: [:create, :destroy]
       resource :comment_likes, only: [:create, :destroy]
     end
+    resources :users, only: [:show]
     post 'posts/unpublished' => 'posts#unpublished'
     post 'check_current_user' => 'posts#checkCurrentUser'
   end

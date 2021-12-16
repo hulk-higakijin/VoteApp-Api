@@ -90,6 +90,7 @@ class PostsController < ApplicationController
     post.destroy
   end
 
+  # いらないかも
   def checkCurrentUser
     u = current_user
     user_array = {
