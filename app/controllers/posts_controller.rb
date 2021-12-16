@@ -52,6 +52,7 @@ class PostsController < ApplicationController
       end,
       comments: p.comments.map do |c| {
           id: c.id,
+          user_id: c.user.id,
           name: c.user.name,
           is_agree: c.is_agree,
           body: c.body,
@@ -88,4 +89,6 @@ class PostsController < ApplicationController
     post = Post.find(params[:post][:id])
     post.destroy
   end
+
+  
 end
