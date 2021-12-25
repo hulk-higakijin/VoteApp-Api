@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2021_12_14_115020) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "comment_likes", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "comment_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "comment_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["comment_id"], name: "index_comment_likes_on_comment_id"
@@ -22,8 +25,8 @@ ActiveRecord::Schema.define(version: 2021_12_14_115020) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "post_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
     t.text "body", null: false
     t.integer "likes_count", default: 0
     t.boolean "is_agree", null: false
@@ -34,8 +37,8 @@ ActiveRecord::Schema.define(version: 2021_12_14_115020) do
   end
 
   create_table "post_likes", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "post_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_post_likes_on_post_id"
@@ -47,7 +50,7 @@ ActiveRecord::Schema.define(version: 2021_12_14_115020) do
     t.integer "agree_count", default: 0
     t.integer "disagree_count", default: 0
     t.integer "likes_count", default: 0
-    t.integer "user_id"
+    t.bigint "user_id"
     t.boolean "is_published", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -71,8 +74,8 @@ ActiveRecord::Schema.define(version: 2021_12_14_115020) do
 
   create_table "votes", force: :cascade do |t|
     t.boolean "is_agree", null: false
-    t.integer "user_id", null: false
-    t.integer "post_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_votes_on_post_id"
