@@ -3,7 +3,7 @@ class CommentLikesController < ApplicationController
 
   def create
     comment = Comment.find(params[:comment][:id])
-    CommentLike.create(comment_id: comment.id, user_id: current_user.id)
+    current_user.comment_likes.create(comment_id: comment.id)
   end
 
   def destroy

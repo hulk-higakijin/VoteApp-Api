@@ -74,21 +74,16 @@ class PostsController < ApplicationController
   end
 
   def create
-    post = Post.create(topic: params[:post][:topic],
-                        user_id: current_user.id,
-                        is_published: params[:post][:published]
-                      )
+    current_user.posts.create(topic: params[:post][:topic], is_published: params[:post][:published])
   end
 
-  def unpublished
-    post = Post.find(params[:post][:id])
-    post.update(is_published: true) if !post.is_published
+  def to_published
+    post = current_user.posts.find(params[:post][:id])
+    post.update!(is_published: true) if !post.is_published
   end
 
   def destroy
-    post = Post.find(params[:post][:id])
-    post.destroy
+    current_user.posts.find(params[:post][:id]).destroy!
   end
 
-  
 end

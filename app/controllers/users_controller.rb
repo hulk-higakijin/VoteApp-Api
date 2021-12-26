@@ -44,7 +44,7 @@ class UsersController < ApplicationController
     user.update(name: name, email: email, introduction: introduction)
   end
 
-  def checkCurrentUser
+  def check_current_user
     u = current_user
     user_array = {
       id: u.id,
