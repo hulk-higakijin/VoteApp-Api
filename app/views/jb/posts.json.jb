@@ -1,0 +1,26 @@
+json = @posts.map do |post|
+  {
+    id: post.id,
+    user_id: post.user.id,
+    uid: post.user.email,
+    name: post.user.name,
+    topic: post.topic,
+    agree_count: post.agree_count,
+    disagree_count: post.disagree_count,
+    likes_count: post.likes_count,
+    is_published: post.is_published,
+    created_at: post.created_at,
+    votes: post.votes.map do |vote| {
+      id: vote.id,
+      uid: vote.user.email,
+      is_agree: vote.is_agree
+    }
+    end,
+    likes: post.post_likes.map do |like| {
+      id: like.id,
+      uid: like.user.email
+    } 
+    end
+  }
+end
+

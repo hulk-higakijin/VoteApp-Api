@@ -2,75 +2,13 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :unpublished, :destroy]
 
   def index
-    posts = Post.all.eager_load(:user, :votes)
-    posts_array = posts.map do |p|
-      {
-        id: p.id,
-        user_id: p.user.id,
-        uid: p.user.email,
-        name: p.user.name,
-        topic: p.topic,
-        agree_count: p.agree_count,
-        disagree_count: p.disagree_count,
-        likes_count: p.likes_count,
-        is_published: p.is_published,
-        created_at: p.created_at,
-        votes: p.votes.map do |v| {
-          id: v.id,
-          uid: v.user.email,
-          is_agree: v.is_agree
-        }
-        end,
-        likes: p.post_likes.map do |l| {
-          id: l.id,
-          uid: l.user.email
-        } 
-        end
-      }
-    end
-    render json: posts_array, status: 200
+    @posts = Post.all.eager_load(:user, :votes).order(id: "DESC")
+    render :template => 'jb/posts.json.jb'
   end
 
   def show
-    p = Post.eager_load(:user, :votes, :comments).find(params[:id])
-    post_array = {
-      id: p.id,
-      user_id: p.user_id,
-      uid: p.user.email,
-      name: p.user.name,
-      topic: p.topic,
-      agree_count: p.agree_count,
-      disagree_count: p.disagree_count,
-      likes_count: p.likes_count,
-      is_published: p.is_published,
-      created_at: p.created_at,
-      votes: p.votes.map do |v| {
-          id: v.id,
-          uid: v.user.email,
-          is_agree: v.is_agree
-        }
-      end,
-      comments: p.comments.map do |c| {
-          id: c.id,
-          user_id: c.user.id,
-          name: c.user.name,
-          is_agree: c.is_agree,
-          body: c.body,
-          likes_count: c.likes_count,
-          likes: c.comment_likes.map do |l| {
-              id: l.id,
-              uid: l.user.email
-            }
-          end
-        }
-      end,
-      likes: p.post_likes.map do |l| {
-          id: l.id,
-          uid: l.user.email
-        }
-      end
-    }
-    render json: post_array, status: 200
+    @post = Post.eager_load(:user, :votes, :comments).find(params[:id])
+    render :template => 'jb/post_detail.json.jb'
   end
 
   def create
