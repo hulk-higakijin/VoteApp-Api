@@ -1,0 +1,39 @@
+json = {
+  id: @post.id,
+  user_id: @post.user_id,
+  uid: @post.user.email,
+  name: @post.user.name,
+  topic: @post.topic,
+  agree_count: @post.agree_count,
+  disagree_count: @post.disagree_count,
+  likes_count: @post.likes_count,
+  is_published: @post.is_published,
+  created_at: @post.created_at,
+  votes: @post.votes.map do |v| {
+      id: v.id,
+      uid: v.user.email,
+      is_agree: v.is_agree
+    }
+  end,
+  comments: @post.comments.map do |comment| {
+      id: comment.id,
+      user_id: comment.user.id,
+      name: comment.user.name,
+      is_agree: comment.is_agree,
+      body: comment.body,
+      likes_count: comment.likes_count,
+      likes: comment.comment_likes.map do |like| {
+          id: like.id,
+          uid: like.user.email
+        }
+      end
+    }
+  end,
+  likes: @post.post_likes.map do |like| {
+      id: like.id,
+      uid: like.user.email
+    }
+  end
+}
+
+json
