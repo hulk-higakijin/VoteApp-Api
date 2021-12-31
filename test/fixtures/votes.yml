@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  is_agree: false
+  user: one
+  post: one
+
+two:
+  is_agree: false
+  user: two
+  post: two

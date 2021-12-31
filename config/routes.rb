@@ -1,3 +1,19 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  # root "posts#index"
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+    registrations: 'auth/registrations'
+  }
+
+  scope :api, { format: 'json' } do
+    resources :posts do 
+      resource :votes, only: [:create] 
+      resource :comments, only: [:create]
+      resource :post_likes, only: [:create, :destroy]
+      resource :comment_likes, only: [:create, :destroy]
+    end
+    resources :users, only: [:show, :update]
+    post 'posts/unpublished' => 'posts#to_published'
+    post 'check_current_user' => 'users#check_current_user'
+  end
+
 end
